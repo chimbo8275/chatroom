@@ -46,5 +46,7 @@ group :development, :test do
 
   gem 'devise'
 
+  #gem 'angularjs-rails'
+
 end
 

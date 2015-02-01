@@ -5,6 +5,17 @@ class MessagesController < ApplicationController
   # GET /messages.json
   def index
     @messages = Message.all
+    @message_json = @messages.to_json
+    respond_to do |format|
+      format.html {
+
+      }
+      format.json {
+
+        render status: 200, data: @message_json
+
+      }
+    end
   end
 
   # GET /messages/1
