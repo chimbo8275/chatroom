@@ -4,10 +4,18 @@ class MessagesController < ApplicationController
   # GET /messages
   # GET /messages.json
   def index
-    @messages = Message.all
+    #{:symbol => 'value'}  = old way, but needed for where syntax containing restrictions
+    #{symbol: 'value'} = new way
+    #params.require(:last_received_at)
+    last_received_at = params[:last_received_at] || 100.years.ago
+    puts last_received_at.inspect
+
+    @messages = Message.where("created_at > ?", last_received_at.to_time.utc.iso8601)
     @message_json = @messages.to_json
     respond_to do |format|
       format.html {
+
+        @message = Message.new
 
       }
       format.json {
@@ -39,7 +47,7 @@ class MessagesController < ApplicationController
 
     respond_to do |format|
       if @message.save
-        format.html { redirect_to @message, notice: 'Message was successfully created.' }
+        format.html { redirect_to root_path, notice: 'Message was successfully created.' }
         format.json { render :show, status: :created, location: @message }
       else
         format.html { render :new }

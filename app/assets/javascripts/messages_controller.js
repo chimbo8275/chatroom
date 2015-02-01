@@ -1,26 +1,28 @@
 var chatRoomApp = angular.module('chatRoomApp', []);
 
 chatRoomApp.controller('chatRoomCtrl', ['$scope', '$http','$timeout', function ($scope, $http, $timeout ) {
+
+    $scope.last_update_timestamp = new Date
+
 	$scope.init = function(messages) {
-		$scope.messages = messages
+		$scope.messages = messages;
 		$scope.poll();
-		//debugger;
 	}
 
 	$scope.poll = function() {
         $timeout(function() {
-        	//debugger;
-        	$http.get("/messages.json").then(function(data){
-        		
-        		$scope.messages = $scope.messages.concat(data.data) ;
+        	current_timestamp = new Date;
 
-        		//debugger;
+        	$http.get("/messages.json?last_received_at=" + $scope.last_update_timestamp).then(function(data){
+        		$scope.messages = $scope.messages.concat(data.data);
+
+                if(data.data.length){
+                    $scope.last_update_timestamp = current_timestamp;
+                }
         	})
             
             $scope.poll();
         }, 5000);
     };     
    
-
-	$scope.messages = ["string one","string two"]
 }]);
