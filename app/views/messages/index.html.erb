@@ -1,22 +1,36 @@
+<div class='span2'>
+  <h3>Rooms</h3>
+</div>
 
-<p id="notice"><%= notice %></p>
+<div class='span8'>
+<%= content_tag "div", :'ng-app' => 'chatRoomApp', :'ng-controller' => 'chatRoomCtrl', :'ng-init' => "init()" do %>
+  <div class='row-fluid span12'>
+  <%= image_tag 'spinner.gif', 'ng-show' => 'loading' %>
 
-<h1>Listing Messages</h1>
+    <div class='chat_window'>
+      <div ng-repeat="message in messages">
+        {{message.author.email}}
+        :
+        {{message.body}}
+      </div>
+    </div>
 
+    <form ng-submit='send_message()'>
 
-<%= content_tag "div", :'ng-app' => 'chatRoomApp', :'ng-controller' => 'chatRoomCtrl', :'ng-init' => "init(#{@message_json})" do %>
-  <div ng-repeat="message in messages">
-      {{message.body}}
+      <div class="field span10">
+        <input name='messages[body]' type='text' ng-model='body' class='input-block-level message_body'>
+      </div>
+      <div class="actions span2">
+        <input type='submit' class='btn btn-large btn-primary' ng-disabled='loading'>
+      </div>
+    </form>
   </div>
+
 <% end %>
+</div>
 
-<%= form_for(@message) do |f| %>
- 
-  <div class="field">
-    <%= f.text_area :body %>
-  </div>
-  <div class="actions">
-    <%= f.submit 'Submit', class: 'btn btn-large btn-primary' %>
-  </div>
-<% end %>
+<div class='span2'>
+  <%= link_to('Logout', destroy_user_session_path, :method => :delete, class: 'btn') %>        
 
+  <h3>Users</h3>
+</div>

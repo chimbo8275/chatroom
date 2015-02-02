@@ -1,5 +1,6 @@
 class MessagesController < ApplicationController
   before_action :set_message, only: [:show, :edit, :update, :destroy]
+ skip_before_filter :verify_authenticity_token  
 
   # GET /messages
   # GET /messages.json
@@ -7,21 +8,18 @@ class MessagesController < ApplicationController
     #{:symbol => 'value'}  = old way, but needed for where syntax containing restrictions
     #{symbol: 'value'} = new way
     #params.require(:last_received_at)
-    last_received_at = params[:last_received_at] || 100.years.ago
+
+    last_received_at = params[:last_received_at].blank? ? 100.years.ago : params[:last_received_at]
     puts last_received_at.inspect
 
     @messages = Message.where("created_at > ?", last_received_at.to_time.utc.iso8601)
     @message_json = @messages.to_json
     respond_to do |format|
       format.html {
-
         @message = Message.new
-
       }
       format.json {
-
         render status: 200, data: @message_json
-
       }
     end
   end
@@ -44,6 +42,7 @@ class MessagesController < ApplicationController
   # POST /messages.json
   def create
     @message = Message.new(message_params)
+    @message.author_id = current_user.id
 
     respond_to do |format|
       if @message.save
