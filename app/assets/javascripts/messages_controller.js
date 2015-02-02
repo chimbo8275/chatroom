@@ -8,6 +8,7 @@ chatRoomApp.controller('chatRoomCtrl', ['$scope', '$http','$timeout', function (
 	$scope.init = function(messages) {
 		$scope.messages = [];
 		$scope.poll();
+        $scope.room_id = 1;
         //set room id to id of lobby room.
 	}
 
