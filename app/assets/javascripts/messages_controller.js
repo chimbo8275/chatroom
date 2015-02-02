@@ -25,7 +25,7 @@ chatRoomApp.controller('chatRoomCtrl', ['$scope', '$http','$timeout', function (
         	})
             
             $scope.poll();
-        }, 5000);
+        }, 2000);
     };     
    
     $scope.send_message = function() {
