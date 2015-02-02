@@ -12,6 +12,9 @@ class MessagesController < ApplicationController
     last_received_at = params[:last_received_at].blank? ? 100.years.ago : params[:last_received_at]
     puts last_received_at.inspect
 
+    @rooms = Room.all
+
+    #make a change to include room id if one is given
     @messages = Message.where("created_at > ?", last_received_at.to_time.utc.iso8601)
     @message_json = @messages.to_json
     respond_to do |format|

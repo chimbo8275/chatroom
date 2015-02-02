@@ -1,9 +1,17 @@
+<%= content_tag "div", :'ng-app' => 'chatRoomApp', :'ng-controller' => 'chatRoomCtrl', :'ng-init' => "init()" do %>
+
 <div class='span2'>
   <h3>Rooms</h3>
+
+  <% @rooms.each do |room| %>
+    <p>
+    <%= link_to room.name, '#', :'ng-click' => "set_room(#{room.id})" %>
+    </p>
+  <% end %>
+  <%= button_to 'New Room', new_room_path, class: 'btn btn-primary', method: 'get'%>
 </div>
 
 <div class='span8'>
-<%= content_tag "div", :'ng-app' => 'chatRoomApp', :'ng-controller' => 'chatRoomCtrl', :'ng-init' => "init()" do %>
   <div class='row-fluid span12'>
   <%= image_tag 'spinner.gif', 'ng-show' => 'loading' %>
 
@@ -26,11 +34,15 @@
     </form>
   </div>
 
-<% end %>
 </div>
 
 <div class='span2'>
   <%= link_to('Logout', destroy_user_session_path, :method => :delete, class: 'btn') %>        
 
   <h3>Users</h3>
+
+  {{room_id}}
 </div>
+
+<% end %>
+
