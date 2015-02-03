@@ -1,6 +1,6 @@
 class MessagesController < ApplicationController
   before_action :set_message, only: [:show, :edit, :update, :destroy]
- skip_before_filter :verify_authenticity_token  
+  skip_before_filter :verify_authenticity_token  
 
   # GET /messages
   # GET /messages.json
@@ -9,7 +9,7 @@ class MessagesController < ApplicationController
     #{symbol: 'value'} = new way
     #params.require(:last_received_at)
 
-    last_received_at = params[:last_received_at].blank? ? 100.years.ago : params[:last_received_at]
+    last_received_at = params[:last_received_at].blank? ? 10.minutes.ago : params[:last_received_at]
     puts last_received_at.inspect
 
     @rooms = Room.all

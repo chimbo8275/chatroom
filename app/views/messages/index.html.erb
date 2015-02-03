@@ -1,6 +1,6 @@
 <%= content_tag "div", :'ng-app' => 'chatRoomApp', :'ng-controller' => 'chatRoomCtrl', :'ng-init' => "init()" do %>
 
-<div class='span2'>
+<div class='span2 room_window'>
   <h3>Rooms</h3>
 
   <% @rooms.each do |room| %>
@@ -8,7 +8,10 @@
     <%= link_to room.name, '#', :'ng-click' => "set_room(#{room.id})" %>
     </p>
   <% end %>
+
+  <div>
   <%= button_to 'New Room', new_room_path, class: 'btn btn-primary', method: 'get'%>
+  </div>
 </div>
 
 <div class='span8'>
