@@ -1,5 +1,5 @@
 <h2>Welcome To Project: CHAT</h2>
-<div class='span2 offset6'>
+<div class='span2 offset4'>
   <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
     <div class="field">
       <%= f.label :email %><br />
@@ -21,8 +21,9 @@
     <div class="action">
       <%= f.submit "Log In" %>
     </div>
-</div>
+
 
 <% end %>
 
 <%= render "devise/shared/links" %>
+</div>
